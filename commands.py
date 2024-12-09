@@ -1,10 +1,15 @@
 import re
+import sys
+import locale
+
 from telegram import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram.ext import ContextTypes
 from database import add_item, get_items, delete_item, update_notification_status, save_chat_id, get_chat_id
 from steam_api import fetch_price
 from config import NOTIFICATION_MODE
 
+sys.stdout.reconfigure(encoding='utf-8')  # Настраиваем вывод Python на UTF-8
+locale.setlocale(locale.LC_ALL, 'C.UTF-8')  # Устанавливаем локаль на UTF-8
 
 # Состояния для ConversationHandler
 INPUT_NAME, INPUT_PRICE = range(2)
