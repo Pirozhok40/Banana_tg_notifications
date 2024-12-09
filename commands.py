@@ -110,18 +110,22 @@ async def process_message(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     state = context.user_data.get("state")
 
     if state == "add_item_name":
-        # Логика добавления предмета
         text = update.message.text.strip()
+
+        # Проверка, является ли введённый текст ссылкой
         if text.startswith("https://steamcommunity.com/market/listings/"):
+            # Регулярное выражение для проверки корректности ссылки на предмет
             match = re.search(r"listings/\d+/([^/]+)$", text)
             if match:
-                item_name = match.group(1)
+                item_name = match.group(1)  # Извлекаем название предмета из ссылки
             else:
-                await update.message.reply_text("Некорректная ссылка. Попробуйте снова.")
+                await update.message.reply_text("Ошибка: введённая ссылка не относится к конкретному предмету. Попробуйте снова.")
                 return
         else:
+            # Если текст не является ссылкой, предполагаем, что это название предмета
             item_name = text
 
+        # Сохраняем название предмета и переходим к вводу цены
         context.user_data["item_name"] = item_name
         context.user_data["state"] = "add_item_price"
         await update.message.reply_text(f"Название: {item_name}. Теперь введите целевую цену (например, 0.04):")
