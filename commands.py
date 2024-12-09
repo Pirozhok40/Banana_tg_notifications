@@ -22,10 +22,15 @@ STATE_CHANGE_MODE = "change_mode"
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Стартовая команда, которая сохраняет ID чата и открывает главное меню"""
     chat_id = update.effective_chat.id
+    
+    # Сохраняем chat_id в user_data и базу данных
     context.user_data["chat_id"] = chat_id
+    save_chat_id(chat_id)  # Сохраняем ID в базу данных
+    print(f"[DEBUG] CHAT_ID {chat_id} сохранён.")
+
     await update.message.reply_text("Добро пожаловать в бот отслеживания цен!")
     await main_menu(update, context)
-
+    
 async def main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Главное меню с кнопками"""
     keyboard = [
