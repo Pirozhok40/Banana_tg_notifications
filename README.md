@@ -25,8 +25,11 @@ cd Banana_tg_notifications
 
 ### 3. Установка зависимостей
 python3 -m venv .venv
+
 source .venv/bin/activate
+
 pip install -r requirements.txt
+
 
 ### 4. Настройка токена в config.py
 TELEGRAM_TOKEN = 
