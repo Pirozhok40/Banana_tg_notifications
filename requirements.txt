@@ -2,3 +2,4 @@ python-telegram-bot==20.3
 aiohttp==3.8.5
 python-telegram-bot==20.3
 requests==2.31.0
+python-telegram-bot[job-queue]==20.3
