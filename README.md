@@ -20,6 +20,7 @@
 
 ### 2. Клонирование репозитория
 git clone https://github.com/Pirozhok40/Banana_tg_notifications
+
 cd Banana_tg_notifications
 
 ### 3. Установка зависимостей
