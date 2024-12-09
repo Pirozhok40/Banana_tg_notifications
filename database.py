@@ -77,22 +77,18 @@ def update_notification_status(name: str, notified: bool) -> None:
 
 
 def save_chat_id(chat_id: int) -> None:
-    """Сохраняет chat_id в базу данных"""
+    """Сохраняет или обновляет CHAT_ID в таблице settings."""
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
+
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS settings (
-            key TEXT PRIMARY KEY,
-            value TEXT
-        )
-    """)
-    cursor.execute("""
-        INSERT OR REPLACE INTO settings (key, value)
-        VALUES ('chat_id', ?)
-    """, (chat_id,))
+        INSERT INTO settings (key, value) VALUES (?, ?)
+        ON CONFLICT(key) DO UPDATE SET value = ?
+    """, ("chat_id", str(chat_id), str(chat_id)))
+
     conn.commit()
     conn.close()
-
+    
 
 def get_chat_id() -> int | None:
     """Получает chat_id из базы данных"""
